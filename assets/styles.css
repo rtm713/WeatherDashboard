@@ -1,0 +1,50 @@
+
+body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+header {
+    background-color: royalblue;
+    text-align: center;
+    width: 100%;
+}
+
+header h1 {
+    color: white;
+    font-family: sans-serif;
+}
+
+#searchContainer {
+    display: inline-flex;
+    flex-direction: column;
+    width: min-content;
+}
+
+#searchContainer h2 {
+    font-family: sans-serif;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+
+#searchContainer input {
+    width: 20rem;
+    height: 2rem;
+}
+
+#searchContainer button {
+    width: 20.5rem;
+    align-self: center;
+    margin: 10px 0 5px 0;
+    background-color: royalblue;
+    font-weight: 700;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+}
+
+
+#resultsContainer{
+    background-color: red;
+}
