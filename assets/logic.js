@@ -46,22 +46,24 @@ function fetchWeatherResults(locationData) {
     })
     .then(function (data) {
         console.log('Data :>>', data);
-        renderWeatherData(data)
-        // renderDrinkResults(data);
+        renderCurrentWeatherData(data);
+        renderFiveDayWeatherData(data);
     })
     .catch(function (error) {
         console.error(error);
     });
 }
 
-function renderWeatherData(data) {
+function renderCurrentWeatherData(data) {
     currentDay.textContent = " ";
 
     var curCity = document.createElement('h2');
     curCity.textContent = searchContent;
     currentDay.append(curCity);
 
-    // NEED DATE !!!!! 
+    var date = document.createElement('h3');
+    date.textContent = dayjs(data.list[0].dt_txt).format('MM/DD/YYYY');
+    currentDay.append(date);
 
     var icon = document.createElement('img');
     var iconCode = data.list[0].weather[0].icon;
@@ -81,4 +83,39 @@ function renderWeatherData(data) {
     var humidity = document.createElement('p');
     humidity.textContent = "Humidity: " + data.list[0].main.humidity + "%";
     currentDay.append(humidity);
+}
+
+function renderFiveDayWeatherData(data) {
+    fiveDay.textContent = " ";
+    var dayData = [0,12,20,28,36];
+
+    for (var i=0; i<dayData.length; i++) {
+        var dayDiv = document.createElement('div');
+
+        var date = document.createElement('h3');
+        date.textContent = dayjs(data.list[dayData[i]].dt_txt).format('MM/DD/YYYY');
+        dayDiv.append(date);
+
+        var icon = document.createElement('img');
+        var iconCode = data.list[dayData[i]].weather[0].icon;
+        var iconUrl = "https://openweathermap.org/img/wn/" + iconCode + ".png";
+        icon.setAttribute('src', iconUrl);
+        dayDiv.append(icon);
+
+
+        var temp = document.createElement('p');
+        temp.textContent = "Temp: " + data.list[dayData[i]].main.temp + "°F";
+        dayDiv.append(temp);
+
+        var wind = document.createElement('p');
+        wind.textContent = "Wind: " + data.list[dayData[i]].wind.speed + "MPH";
+        dayDiv.append(wind);
+
+        var humidity = document.createElement('p');
+        humidity.textContent = "Humidity: " + data.list[dayData[i]].main.humidity + "%";
+        dayDiv.append(humidity);
+
+        fiveDay.append(dayDiv);
+    }
+
 }
