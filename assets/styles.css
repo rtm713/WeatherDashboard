@@ -4,6 +4,7 @@ body {
     flex-wrap: wrap;
 }
 
+
 header {
     background-color: royalblue;
     text-align: center;
@@ -47,4 +48,11 @@ header h1 {
 
 #resultsContainer{
     background-color: chartreuse;
+    width: 65%;
+    margin: 1%;
+}
+
+#currentDay {
+    border: 2px solid black;
+    padding-left: 1%;
 }
