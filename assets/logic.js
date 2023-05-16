@@ -6,11 +6,11 @@ var fiveDay = document.querySelector('#fiveDay');
 var searchContainer = document.querySelector('#searchContainer');
 var previousSearches = document.querySelector('#previousSearches');
 
-var WEATHERLOCATION_API_URL = "http://api.openweathermap.org/geo/1.0/direct?limit=3&q=";
+var WEATHERLOCATION_API_URL = "https://api.openweathermap.org/geo/1.0/direct?limit=3&q=";
 var searchContent = "";
 var API_KEY = "&appid=2f82ce2bb874a38e8104a84e04719d1a"
 
-var WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/forecast?units=imperial&";
+var WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/forecast?units=imperial&";
 
 renderSearchButtons();
 
