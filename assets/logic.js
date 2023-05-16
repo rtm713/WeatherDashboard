@@ -3,6 +3,8 @@ var inputBox = document.querySelector('#inputBox');
 var searchButton = document.querySelector('#searchButton');
 var currentDay = document.querySelector('#currentDay');
 var fiveDay = document.querySelector('#fiveDay');
+var searchContainer = document.querySelector('#searchContainer');
+var previousSearches = document.querySelector('#previousSearches');
 
 var WEATHERLOCATION_API_URL = "http://api.openweathermap.org/geo/1.0/direct?limit=3&q=";
 var searchContent = "";
@@ -10,14 +12,26 @@ var API_KEY = "&appid=2f82ce2bb874a38e8104a84e04719d1a"
 
 var WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/forecast?units=imperial&";
 
+renderSearchButtons();
+
+var previousSearchButton = document.querySelectorAll(".previousSearchButton");
 
 searchButton.addEventListener('click', function() {
     searchContent = inputBox.value;
-    fetchWeatherLocationResults();
+    fetchWeatherLocationResults(searchContent);
 })
 
-function fetchWeatherLocationResults() {
-    fetch (WEATHERLOCATION_API_URL+searchContent+API_KEY)
+previousSearches.addEventListener('click', function(event) {
+    if (event.target && event.target.matches('button.previousSearchButton')) {
+        var buttonContent = event.target.textContent;
+        searchContent = buttonContent;
+        fetchWeatherLocationResults(buttonContent);
+    }
+});
+
+
+function fetchWeatherLocationResults(DATA) {
+    fetch (WEATHERLOCATION_API_URL+DATA+API_KEY)
     .then(function (res) {
         if (!res.ok) throw new Error('oops got an error');
         return res.json();
@@ -48,6 +62,7 @@ function fetchWeatherResults(locationData) {
         console.log('Data :>>', data);
         renderCurrentWeatherData(data);
         renderFiveDayWeatherData(data);
+        saveSearchData();
     })
     .catch(function (error) {
         console.error(error);
@@ -87,7 +102,7 @@ function renderCurrentWeatherData(data) {
 
 function renderFiveDayWeatherData(data) {
     fiveDay.textContent = " ";
-    var dayData = [0,12,20,28,36];
+    var dayData = [3,12,20,28,36];
 
     for (var i=0; i<dayData.length; i++) {
         var dayDiv = document.createElement('div');
@@ -117,5 +132,42 @@ function renderFiveDayWeatherData(data) {
 
         fiveDay.append(dayDiv);
     }
+}
 
+function saveSearchData() {
+
+    var savedSearches = {
+        search: searchContent,
+    };
+
+    var saveSearch = localStorage.getItem('saveSearch');
+    if (saveSearch === null) {
+        saveSearch = [];
+     } else {
+        saveSearch = JSON.parse(saveSearch);
+    }
+    saveSearch.push(savedSearches);
+    var thisSearch = JSON.stringify(saveSearch);
+    localStorage.setItem("saveSearch", thisSearch);
+
+    renderSearchButtons();
+
+}
+
+function renderSearchButtons() {
+
+    previousSearches.textContent = " ";
+
+    var saveSearch = localStorage.getItem('saveSearch');
+    if (saveSearch === null) {
+        return;
+     } else {
+        saveSearch = JSON.parse(saveSearch);
+    }
+    for (var i=0; i<saveSearch.length; i++) {
+        var savedSearch = document.createElement('button');
+        savedSearch.setAttribute('class', "previousSearchButton")
+        savedSearch.textContent = saveSearch[i].search;
+        previousSearches.append(savedSearch);
+    }
 }
