@@ -2,6 +2,8 @@
 
 ## Description
 
+A simple weather website where a user can search a city and is then presented with the current weather as well as the weather for the next 5 days.
+
 ## User Story
 ```
 AS A traveler
@@ -21,4 +23,10 @@ THEN I am presented with a 5-day forecast that displays the date, an icon repres
 WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 ```
+## Project URL
 
+https://rtm713.github.io/WeatherDashboard/
+
+## Project Screenshot
+
+![Alt text](./assets/images/Screenshot%202023-05-15%20231550.png)
